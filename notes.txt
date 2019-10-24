@@ -1,0 +1,25 @@
+# forum
+
+1. Ветка (thread)
+2. Ответ (reply)
+3. Пользователь (user)
+
+A. Ветка создается пользователем
+B. Ответ принадлежит ветке, и пользователю
+
+php artisan make:model Thread -mr
+php artisan db:seed --class=DatabaseSeeder
+
+.\vendor\bin\phpunit  -  для запуска тестов на windows.
+composer global require phpunit/phpunit - до этого делал еще глобально, но не понятно, надо это или нет.
+
+$threads = Thread::latest()->get(); - сортировка по дате
+
+Вместо {{ route('threads.show', $thread->id) }}
+использовать {{ $thread->path() }},
+где public function path() { return '/threads/' . $this->id; } 
+
+
+.\vendor\bin\phpunit tests/Feature/ParticipateInForumTest.php
+
+https://medium.com/helpspace/fresh-database-once-befor-testing-starts-faa2b10dc76f
