@@ -21,13 +21,16 @@ class ParticipateInForumTest extends TestCase
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
         $user = create('App\User');
-        $thread = create('App\Thread', ['user_id' => $user->id]);
+        $channel = create('App\Channel');
+        $thread = create('App\Thread', ['user_id' => $user->id, 'channel_id'=>$channel->id]);
         $reply = create('App\Reply', [
             'user_id' => $user->id,
             'thread_id' => $thread->id,
         ]);
 
-        $this->post($thread->path() .'/replies', $reply->toArray());
+        // dd($thread->path().'/replies');
+
+        $this->post($thread->path() .'/replies', [$reply->toArray(), $thread]);
     }
 
     /** @test */
@@ -41,6 +44,7 @@ class ParticipateInForumTest extends TestCase
             'user_id' => $user->id,
             'thread_id' => $thread->id,
         ]);
+        dd($thread);
 
         $this->post($thread->path() .'/replies', $reply->toArray());
 
